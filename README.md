@@ -99,9 +99,9 @@ The following steps will show you a quick way to configure the server with OpenV
         cat /var/log/syslog | grep ovpn
         tail -f /var/log/syslog | grep ovpn
 
-### OpenVPN Client Certs
+### OpenVPN Client Certificates
 
-To connect an OpenVPN client to the OpenVPN server you will need a way to authenticate.  One way is to create a client certificate that the client can then use to connect.  The following steps detail this process.  It assumed you are still logged into the server and running as root.
+To connect an OpenVPN client to the OpenVPN server you will need a way to authenticate.  One way is to create a client certificate that the client can then use to connect.  The following steps detail this process.  It is assumed you are still logged into the server and running as root.
 
 1. Go to the easy-rsa directory.
 
@@ -115,4 +115,32 @@ To connect an OpenVPN client to the OpenVPN server you will need a way to authen
 
          cp keys/key.crt ../
 
-4. Transfer the key.crt and key.key file to your openVPN client.
+4. Transfer the Client Cert (key.crt) and the Client Cert Key (key.key) files to your OpenVPN client.  Also, transfer the Server Certificate (ca.crt) from the previous section to the OpenVPN client.
+
+### OpenVPN Client Setup & Configuration File
+
+The exact steps for installing & setting up an OpenVPN Client are not provided here but will be similar to those for setting up the OpenVPN Server should you wish to create your own OpenVPN client.
+
+For the OpenVPN client you will need to provide the following:
+
+        Server Certificate (ca.crt)
+        Client Certificate (key.crt)
+        Client Certificate Key (key.key)
+        OpenVPN Configuration File (openvpn.conf)
+
+You can use the provided openvpn.conf file for your openvpn client configuration.  This provides a basic setup for connecting to your new OpenVPN server.  Read the comments in the configuration file to understand what the properties do.  Check the following settings and make the appropriate changes to connect to your Server.
+
+1. If you are using UDP instead of TCP then comment out proto tcp and uncomment proto udp like shown below.  Otherwise, leave it alone.
+
+         ;proto tcp
+         proto udp
+
+2. Provide the IP address of the VPN server that you setup.  Replace xxx.xxx.xxx.xxx with your IP.  If you modified the port for the server then also replace 1194 with your server's port.  Find the line below and make the changes.
+
+         remote xxx.xxx.xxx.xxx 1194
+
+3. Check that the certs generated in the previous sections have been placed in the correct location and that it corresponds to the settings shown below.  This will depend on your OpenVPN Client setup.
+
+         ca /etc/openvpn/ca.crt
+         cert /etc/openvpn/key.crt
+         key /etc/openvpn/key.key
