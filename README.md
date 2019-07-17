@@ -115,7 +115,7 @@ To connect an OpenVPN client to the OpenVPN server you will need a way to authen
 
          cp keys/key.crt ../
 
-4. Transfer the Client Cert (key.crt) and the Client Cert Key (key.key) files to your OpenVPN client.  Also, transfer the Server Certificate (ca.crt) from the previous section to the OpenVPN client.
+4. Transfer the Client Cert (key.crt) and the Client Cert Key (key.key) files to your OpenVPN client.  Also, transfer the Certificate Authority (ca.crt) from the previous section to the OpenVPN client.  Please note that when copying the files from the OpenVPN server that you should not modify any of the permissions on them.  You may need to copy the files as a root user to your home directory before transferring them to another system.  Feel free to modify the permissions on the copied files but you should delete the extra copies once you have transferred them.
 
 ### OpenVPN Client Setup & Configuration File
 
@@ -123,7 +123,7 @@ The exact steps for installing & setting up an OpenVPN Client are not provided h
 
 For the OpenVPN client you will need to provide the following:
 
-        Server Certificate (ca.crt)
+        Certificate Authority (ca.crt)
         Client Certificate (key.crt)
         Client Certificate Key (key.key)
         OpenVPN Configuration File (openvpn.conf)
@@ -139,7 +139,7 @@ You can use the provided openvpn.conf file for your openvpn client configuration
 
          remote xxx.xxx.xxx.xxx 1194
 
-3. Check that the certs generated in the previous sections have been placed in the correct location and that it corresponds to the settings shown below.  This will depend on your OpenVPN Client setup.
+3. Check that the certs generated in the previous sections have been placed in the correct location and that it corresponds to the settings shown below.  Below is the default but it may vary based  on your OpenVPN Client setup.
 
          ca /etc/openvpn/ca.crt
          cert /etc/openvpn/key.crt
